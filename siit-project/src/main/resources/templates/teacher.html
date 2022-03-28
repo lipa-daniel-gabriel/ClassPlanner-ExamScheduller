@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<style>
+
+    table, th, td {
+        border: 1px solid rgba(0, 0, 0, 0.96);
+        padding: 5px;
+    }
+
+    .button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .button span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .button:hover span {
+        padding-right: 25px;
+    }
+
+    .button:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
+    .button1 {
+        background-color: #064367;
+        border-radius: 12px;
+    }
+
+    .button2 {
+        background-color: #008CBA;
+        border-radius: 12px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    /* The container */
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 120px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 12px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default radio button */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Create a custom radio button */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 12px;
+        width: 12px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the radio button is checked, add a blue background */
+    .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+        top: 4px;
+        left: 4px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: white;
+    }
+
+    .button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .button span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .button:hover span {
+        padding-right: 25px;
+    }
+
+    .button:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
+    .button1 {
+        background-color: #064367;
+        border-radius: 12px;
+    }
+
+    .button2 {
+        background-color: #008CBA;
+        border-radius: 12px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    {
+        margin: 0
+    ;
+        padding: 0
+    ;
+    }
+
+    body {
+        font-size: 62.5%;
+        font-family: Helvetica, sans-serif;
+        background: url(images/stripe.png) repeat;
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    h1 {
+        font-size: 2.0em;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 1.3em;
+        margin-bottom: 20px;
+    }
+
+</style>
+
+
+<head>
+    <div style="background-color: #337ab7; height: 50px;"></div>
+    <div style="position: relative; width: 250px;">
+
+        <div style="position: relative; top: 0; right: 0; width: 235px; text-align:right;">
+            <td th:object="${teacherEntity}">
+                <a th:href="@{'/logout'}" class="btn btn-primary btn-block">Logout</a>
+            </td>
+
+        </div>
+        <div style="position: relative; bottom: 0; right: 0; width: 235px; text-align:right;">
+            <td th:object="${teacherEntity}">
+                <a th:href="@{'/teacher/edit/' + ${id}}" class="btn btn-primary btn-block">User Details</a>
+
+            </td>
+        </div>
+
+    </div>
+    <!--    <table align="right">-->
+    <!--        <td th:object="${teacherEntity}">-->
+    <!--            <a th:href="@{'/teacher/edit/' + ${id}}" class="btn btn-primary btn-block">User Details</a>-->
+    <!--            <a th:href="@{'/logout'}" class="btn btn-primary btn-block">Logout</a>-->
+    <!--            <a th:href="@{'/teacher/'+${id}+'/examPlanner'}" class="btn btn-primary btn-block">Programare Examene</a>-->
+
+    <!--        </td>-->
+    <!--    </table>-->
+
+    <!-- link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" /-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #ededed;">
+<!--<div style="background-color: #337ab7; height: 50px;"></div>-->
+<div class="container-fluid" style="margin-top: 30px;">
+
+
+
+    <div class="container-fluid" style="margin-top: 30px;">
+
+        <div class="row col-lg-4 col-lg-offset-4"
+             style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+            <!--/*@thymesVar id="pfaEntity" type=""*/-->
+
+            <!--/*@thymesVar id="loginEntity" type=""*/-->
+            <form autocomplete="off" action="#" th:action="@{'/teacher/' + ${id} + '/save'}"
+                  th:object="${universityEntity}"
+                  method="post"
+                  class="form-signin" role="form">
+                <h3 class="form-signin-heading">Introduceti Materia</h3>
+
+                <div class="form-group">
+                    <div class="">
+                        <input type="hidden" th:field="*{universitySubjectId}" placeholder="Id" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <input type="text" th:field="*{universitySubject}" placeholder="UniversitySubject"
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <input autocomplete="on" type="hidden" th:field="*{teacherId}" placeholder="TeacherId"
+                               class="form-control"/>
+                    </div>
+                </div>
+
+                <button
+                        type="submit" th:href="@{'/teacher/'+${loginID}}"
+                        class="btn btn-primary btn-block">Adaugati materie
+                </button>
+
+                <!--                <a th:href="@{'/user/pfa/taxes/'+${universityEntity.id}}" class="btn btn-primary btn-block">Afisati registrul</a>-->
+
+        </div>
+
+        <div class="container-fluid" style="margin-top: 30px;">
+
+            <div class="row col-lg-4 col-lg-offset-4"
+                 style="margin-top: 20px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+                <h3 class="form-signin-heading">Lista materii</h3>
+                <tbody>
+
+                <tr th:each="universityEntity : ${universityEntityList}">
+                    <  th:href="@{'/teacher/'+${universityEntity.getUniversitySubjectId()}+ '/classesPlanner'}">
+                        &nbsp;
+                        <button
+                                type="button"
+                                class="btn btn-primary btn-block" th:text="${universityEntity.universitySubject}"/>
+
+                        </button>
+                    </a>
+                </tr>
+                &nbsp;
+                </tbody>
+            </div>
+            <button>
+                <a th:href="@{'/teacher/'+${id}+'/universitySubjectList'}" class="btn btn-primary btn-block">Editeaza lista materii</a>
+                <a th:href="@{'/teacher/'+${id}+'/examPlanner'}" class="btn btn-primary btn-block">Programare Examene</a>
+            </button>
+</body>
+</html>
+
+

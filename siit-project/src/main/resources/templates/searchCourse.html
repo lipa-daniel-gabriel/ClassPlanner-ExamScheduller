@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Style the search field */
+    form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+    }
+
+    /* Style the submit button */
+    form.example button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none; /* Prevent double borders */
+        cursor: pointer;
+    }
+
+    form.example button:hover {
+        background: #0b7dda;
+    }
+
+    /* Clear floats */
+    form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    /* When the screen is less than 600px wide, stack the links and the search field vertically instead of horizontally */
+
+    table, th, td {
+        border: 1px solid rgba(0, 0, 0, 0.96);
+        padding: 5px;
+    }
+
+    .button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .button span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .button:hover span {
+        padding-right: 25px;
+    }
+
+    .button:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
+    .button1 {
+        background-color: #064367;
+        border-radius: 12px;
+    }
+
+    .button2 {
+        background-color: #008CBA;
+        border-radius: 12px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    /* The container */
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 120px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 12px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default radio button */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Create a custom radio button */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 12px;
+        width: 12px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the radio button is checked, add a blue background */
+    .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+        top: 4px;
+        left: 4px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: white;
+    }
+
+    .button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .button span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .button:hover span {
+        padding-right: 25px;
+    }
+
+    .button:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
+    .button1 {
+        background-color: #064367;
+        border-radius: 12px;
+    }
+
+    .button2 {
+        background-color: #008CBA;
+        border-radius: 12px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    {
+        margin: 0
+    ;
+        padding: 0
+    ;
+    }
+
+    body {
+        font-size: 62.5%;
+        font-family: Helvetica, sans-serif;
+        background: url(images/stripe.png) repeat;
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    h1 {
+        font-size: 2.0em;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 1.3em;
+        margin-bottom: 20px;
+    }
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+    <div style="background-color: #337ab7; height: 50px;"></div>
+    <div style="position: relative; width: 250px;">
+
+        <div style="position: relative; top: 0; right: 0; width: 235px; text-align:right;">
+            <td th:object="${studentEntity}">
+                <a th:href="@{'/logout'}" class="btn btn-primary btn-block">Logout</a>
+            </td>
+
+        </div>
+        <div style="position: relative; bottom: 0; right: 0; width: 235px; text-align:right;">
+            <td th:object="${studentEntity}">
+                <a th:href="@{'/teacher/edit/' + ${id}}" class="btn btn-primary btn-block">User Details</a>
+
+            </td>
+        </div>
+
+    </div>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<div>
+    <form class="example" autocomplete="off" action="action_page.php"
+          th:action="@{'/student/' + ${idStudent} + '/saveSearch'}"
+          th:object="${searchEntity}" method="post"
+          role="form">
+        <input type="hidden" id="searchId" th:field="*{searchId}" placeholder="Zi examen"
+               class="form-control"/>
+
+        <h3 class="form-signin-heading">Cautati profesorul</h3>
+        <input type="text" th:field="*{searchedInfo}" placeholder="searchedInfo" name="searchedInfo">
+        <button type="submit"><i class="fa fa-search"></i></button>
+        <td>
+            <a th:href="@{'/student/' + ${idStudent} + '/searchCourse'}">Cauta curs</a>
+            &nbsp;&nbsp;&nbsp;
+            <a th:href="@{'/student/' + ${idStudent} + '/searchGroup'}">Cauta grupa</a>
+        </td>
+</div>
+
+
+</html>

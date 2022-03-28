@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid rgba(0, 0, 0, 0.96);
+            padding: 5px;
+        }
+
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        .button1 {
+            background-color: #064367;
+            border-radius: 12px;
+        }
+
+        .button2 {
+            background-color: #008CBA;
+            border-radius: 12px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<a type="button" onclick="history.back()" class="button button1" style="vertical-align:middle"><span>Back</span></a>
+<!--<div style="background-color: #337ab7; height: 25px;"></div>-->
+<body style="background-color: lightgrey">
+
+<table align="center" class="table table-bordered">
+    <thead>
+    <tr>
+        <th style="background-color:#e83f3f" scope="col">ID</th>
+        <th style="background-color:#00588CFF" scope="col">grupa</th>
+        <th style="background-color:#00588CFF" scope="col">an universar</th>
+        <th style="background-color:#00588CFF" scope="col">serie</th>
+        <th style="background-color:#00588CFF" scope="col">sala de studiu</th>
+        <th style="background-color:#00588CFF" scope="col">tipul cursului</th>
+        <th style="background-color:#00588CFF" scope="col">interval orar</th>
+        <th style="background-color:#00588CFF" scope="col">data</th>
+
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr th:each="subjectEntity : ${subjectSeminaryList}">
+
+        <td style="background-color: aqua" th:text="${subjectEntity.subjectId}"/>
+        <td style="background-color: aqua" th:text="${subjectEntity.group}"/>
+        <td style="background-color: aqua" th:text="${subjectEntity.schoolYear}"/>
+        <td style="background-color: aqua" th:text="${subjectEntity.series}"/>
+        <td style="background-color: aqua" th:text="${subjectEntity.classroom}"/>
+        <td style="background-color: aqua" th:text="${subjectEntity.typeOfCourse}"/>
+        <td style="background-color: aqua" th:text="${subjectEntity.timeSlot}"/>
+        <td style="background-color: aqua" th:text="${subjectEntity.calendarDate}"/>
+
+        <td>
+            <a th:href="@{'/teacher/' + ${subjectEntity.getSubjectId()} + '/scheduleEdit'}">Edit</a>
+            &nbsp;&nbsp;&nbsp;
+            <a th:href="@{'/teacher/' + ${subjectEntity.getSubjectId()} + '/scheduleDelete'}">x</a>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>
+
+
+
+
+

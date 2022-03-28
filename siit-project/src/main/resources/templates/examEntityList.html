@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid rgba(0, 0, 0, 0.96);
+            padding: 5px;
+        }
+
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        .button1 {
+            background-color: #064367;
+            border-radius: 12px;
+        }
+
+        .button2 {
+            background-color: #008CBA;
+            border-radius: 12px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<!--<div style="background-color: #337ab7; height: 25px;"></div>-->
+<body style="background-color: lightgrey">
+
+<table align="center" class="table table-bordered">
+    <thead>
+    <tr>
+        <th style="background-color:#00588CFF" scope="col">Id</th>
+        <th style="background-color:#00588CFF" scope="col">Serie</th>
+        <th style="background-color:#00588CFF" scope="col">Zi</th>
+        <th style="background-color:#00588CFF" scope="col">Luna</th>
+        <th style="background-color:#00588CFF" scope="col">Grupa</th>
+        <th style="background-color:#00588CFF" scope="col">Disciplina</th>
+        <th style="background-color:#00588CFF" scope="col">Sala de examen</th>
+        <th style="background-color:#00588CFF" scope="col">Interval Orar</th>
+        <th style="background-color:#00588CFF" scope="col">Tip de examen</th>
+        <th style="background-color:#00588CFF" scope="col">Timp alocat</th>
+        <th style="background-color:#7e7e7e" scope="col">Edit</th>
+
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr th:each="examEntity : ${examEntityList}">
+
+        <td style="background-color: aqua" th:text="${examEntity.examId}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examSeries}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examDay}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examMonth}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examGroup}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examDiscipline}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examClassroom}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examTime}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examType}"/>
+        <td style="background-color: aqua" th:text="${examEntity.examAllottedTime}"/>
+
+
+
+        <td style="background-color: #b2b2b2">
+            <a th:href="@{'/teacher/' + ${examEntity.examId} + '/scheduleExamEdit'}">Edit</a>
+            &nbsp;&nbsp;&nbsp;
+            <a th:href="@{'/teacher/' + ${examEntity.examId} + '/scheduleExamDelete'}">x</a>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>
+
+
+
+

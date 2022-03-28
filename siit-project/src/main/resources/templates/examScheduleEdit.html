@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<style>
+    /* The container */
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 120px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 12px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default radio button */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Create a custom radio button */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 12px;
+        width: 12px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the radio button is checked, add a blue background */
+    .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+        top: 4px;
+        left: 4px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: white;
+    }
+
+    .button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .button span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .button:hover span {
+        padding-right: 25px;
+    }
+
+    .button:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
+    .button1 {
+        background-color: #064367;
+        border-radius: 12px;
+    }
+
+    .button2 {
+        background-color: #008CBA;
+        border-radius: 12px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+
+<head>
+
+    </table>
+
+    <title>Introduceti suma</title>
+    <!-- link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" /-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #ededed;">
+<div style="background-color: #337ab7; height: 50px;"></div>
+<div class="container-fluid" style="margin-top: 30px;">
+
+    <div class="row col-lg-4 col-lg-offset-4"
+         style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+        <!--/*@thymesVar id="pfaEntity" type=""*/-->
+
+        <!--/*@thymesVar id="loginEntity" type=""*/-->
+        <form autocomplete="off" action="#" th:action="@{'/teacher/' + ${id} + '/saveEditedExam'}"
+              th:object="${examEntity}" method="post"
+              class="form-signin" role="form">
+            <h3 class="form-signin-heading">Introduceti cursul</h3>
+
+            <div class="form-group">
+                <div class="">
+                    <input type="hidden" id="id" th:field="*{examId}" placeholder="Id" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" id="examSeries" th:field="*{examSeries}" placeholder="Serie"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" id="examDay" th:field="*{examDay}" placeholder="Zi examen"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" id="examMonth" th:field="*{examMonth}" placeholder="Luna" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" id="examGroup" th:field="*{examGroup}" placeholder="Grupa"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="hidden" id="examDiscipline" th:field="*{examDiscipline}" placeholder="Disciplina"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" id="examClassroom" th:field="*{examClassroom}" placeholder="Sala de examen"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" id="examTime" th:field="*{examTime}" placeholder="Interval Orar"
+                           class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <h5>Select Business Type: </h5>
+                <label class="container"> Oral
+                    <input type="radio" th:field="*{examType}" th:value="Oral" name="radio">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container"> Scris
+                    <input type="radio" th:field="*{examType}" th:value="Scris" name="radio">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container"> Scris/Oral
+                    <input type="radio" th:field="*{examType}" th:value="Scris-Oral" name="radio">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-group">
+                <div class="">
+                    <input type="text" id="examAllottedTime" th:field="*{examAllottedTime}" placeholder="Timp alocat"
+                           class="form-control"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="">
+                    <input type="hidden" id="idFk" th:field="*{teacherIdExam}" placeholder="Id"
+                           class="form-control"/>
+                </div>
+            </div>
+
+            <button
+                    type="submit" ;
+                    class="btn btn-primary btn-block">Salveaza modificarile
+            </button>
+    </div>
+
+
+</div>
+</body>
+</html>
+
+
+
+
