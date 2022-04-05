@@ -1,14 +1,11 @@
 package com.java.siit.licenta.service;
 
-import com.java.siit.licenta.domain.entity.LoginEntity;
-import com.java.siit.licenta.domain.entity.TeacherEntity;
 import com.java.siit.licenta.domain.entity.UniversitySubjectEntity;
 import com.java.siit.licenta.repository.UniversitySubjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service

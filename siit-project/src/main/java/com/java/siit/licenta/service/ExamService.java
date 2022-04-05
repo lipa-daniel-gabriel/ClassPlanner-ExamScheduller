@@ -1,7 +1,6 @@
 package com.java.siit.licenta.service;
 
 import com.java.siit.licenta.domain.entity.ExamEntity;
-import com.java.siit.licenta.domain.entity.SubjectEntity;
 import com.java.siit.licenta.repository.ExamRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

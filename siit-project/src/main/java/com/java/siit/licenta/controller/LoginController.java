@@ -29,14 +29,7 @@ public class LoginController {
 
     @Autowired
     private final LoginService service;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    private final UserRolesService userRolesService;
-
-
+    private final LoginService loginService;
 
 
     @GetMapping("/login")
@@ -45,63 +38,14 @@ public class LoginController {
     }
 
 
-
     @RequestMapping("/teacher/edit/{id}")
-    public ModelAndView editTeacher(@PathVariable(name = "id") int id) throws NotFoundException {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String emailTemp = service.findById(id).getEmail();
-        String email;
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails) principal).getUsername();
-        } else {
-            email = principal.toString();
-
-        }
-
-        if (email.equals(emailTemp)) {
-
-            ModelAndView mav = new ModelAndView("edit_user");
-            LoginDTO login = service.findById(id);
-            String a = login.getPassword();
-            login.setPassword(bCryptPasswordEncoder.encode(a));
-            mav.addObject("login", login);
-
-            return mav;
-        } else {
-            ModelAndView modelAndView = new ModelAndView("blank");
-            TeacherEntity teacherEntity = new TeacherEntity();
-            modelAndView.addObject("teacherEntity", teacherEntity);
-            return modelAndView;
-        }
+    public void editTeacher(@PathVariable(name = "id") int id) throws NotFoundException {
+        loginService.emailValidatorAndEditorForTeacher(id);
     }
 
     @RequestMapping("/student/edit/{id}")
-    public ModelAndView editStudent(@PathVariable(name = "id") int id) throws NotFoundException {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String emailTemp = service.findById(id).getEmail();
-        String email;
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails) principal).getUsername();
-        } else {
-            email = principal.toString();
-
-        }
-
-        if (email.equals(emailTemp)) {
-
-            ModelAndView mav = new ModelAndView("edit_user");
-            LoginDTO login = service.findById(id);
-            String a = login.getPassword();
-            login.setPassword(bCryptPasswordEncoder.encode(a));
-            mav.addObject("login", login);
-
-            return mav;
-        } else {
-            ModelAndView modelAndView = new ModelAndView("blank");
-            TeacherEntity teacherEntity = new TeacherEntity();
-            modelAndView.addObject("teacherEntity", teacherEntity);
-            return modelAndView;
-        }
+    public void editStudent(@PathVariable(name = "id") int id) throws NotFoundException {
+        loginService.emailValidatorAndEditorForStudent(id);
     }
 
     @GetMapping("/register")
@@ -124,24 +68,7 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public ModelAndView create(LoginEntity loginEntity, BindingResult bindingResult, ModelMap modelMap) {
-
-        loginEntity.setEnabled(true);
-
-        ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("successMessage", "Please correct the errors in form!");
-            modelMap.addAttribute("bindingResult", bindingResult);
-        } else {
-
-            LoginEntity loginEntity1 = service.create(loginEntity);
-
-
-            modelAndView.addObject("successMessage", "User is registered successfully!");
-        }
-        modelAndView.addObject("loginEntity", new LoginEntity());
-        userRolesService.create(loginEntity);
-        modelAndView.setViewName("register");
-        return modelAndView;
+    public void create(LoginEntity loginEntity, BindingResult bindingResult, ModelMap modelMap) {
+        loginService.createLoginEntity(loginEntity, bindingResult, modelMap);
     }
 }

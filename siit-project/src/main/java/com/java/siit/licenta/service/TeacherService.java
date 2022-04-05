@@ -3,15 +3,12 @@ package com.java.siit.licenta.service;
 import com.java.siit.licenta.domain.entity.LoginEntity;
 import com.java.siit.licenta.domain.entity.SubjectEntity;
 import com.java.siit.licenta.domain.entity.TeacherEntity;
-import com.java.siit.licenta.domain.model.TeacherDTO;
-import com.java.siit.licenta.mapper.TeacherEntityToTeacherDTO;
+import com.java.siit.licenta.mapper.LoginDTOToLoginEntity;
 import com.java.siit.licenta.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +16,9 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
     private final SubjectService subjectService;
+    private final LoginService loginService;
+    private final LoginDTOToLoginEntity loginDTOToLoginEntity;
+    private final UniversitySubjectService universitySubjectService;
 
 
     public void createTeacher(LoginEntity loginEntity) {
@@ -49,7 +49,7 @@ public class TeacherService {
         return teacherRepository.getById(id);
     }
 
-    public void saveEditedPlans(Long id,SubjectEntity subjectEntity) {
+    public void saveEditedPlans(Long id, SubjectEntity subjectEntity) {
         List<SubjectEntity> subjectSeminaryList = subjectService.findAllByTypeOfCours("Seminar");
         List<SubjectEntity> subjectLaboratoryList = subjectService.findAllByTypeOfCours("Laborator");
         List<SubjectEntity> subjectCoursList = subjectService.findAllByTypeOfCours("Curs");
@@ -80,4 +80,5 @@ public class TeacherService {
             subjectCoursList.add(subjectEntity);
         }
     }
+
 }

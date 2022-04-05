@@ -1,5 +1,9 @@
 package com.java.siit.licenta.domain.entity;
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -36,10 +40,10 @@ public class LoginEntity {
     @Column(name = "type_of_user")
     private String typeOfUser;
 
-    @Column(name ="group")
+    @Column(name ="login_group")
     private String loginGroup;
 
-    @Column(name ="series")
+    @Column(name ="login_series")
     private String loginSeries;
 
     public boolean getEnabled() {

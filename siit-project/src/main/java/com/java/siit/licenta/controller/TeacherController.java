@@ -14,6 +14,7 @@ import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.Id;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -41,7 +44,9 @@ public class TeacherController {
     private final ExamService examService;
     private final UniversitySubjectService universitySubjectService;
     private final SubjectService subjectService;
+    private final SubjectRepository subjectRepository;
     List<UniversitySubjectEntity> universitySubjectEntityList;
+    private final ClassReservationService classReservationService;
 
 
     @PostMapping()
@@ -62,9 +67,11 @@ public class TeacherController {
         }
         modelAndView.addObject("teacherEntity", teacherEntity);
         modelAndView.setViewName("teacher");
+
         UniversitySubjectEntity universitySubjectEntity = new UniversitySubjectEntity();
         modelAndView.addObject("universityEntity", universitySubjectEntity);
         modelAndView.setViewName("teacher");
+
         TeacherEntity actualTeacher = teacherRepository.getByEmail(loginDTO.getEmail());
         model.addAttribute("id", actualTeacher.getId());
         List<UniversitySubjectEntity> universitySubjectEntityList = universitySubjectService.findAll();
@@ -121,22 +128,29 @@ public class TeacherController {
     @PostMapping("/saveEditedExam")
     public RedirectView saveEditedExams(@PathVariable("id") Long id, ExamEntity examEntity) {
         ExamEntity neededId = examService.getById(id);
-        System.out.println(neededId);
         examService.createExam(examEntity, neededId.getTeacherIdExam());
         return new RedirectView("http://localhost:8080/teacher/" + neededId.getTeacherIdExam() + "/scheduleExam");
     }
 
     @PostMapping("/savePlans")
     public RedirectView savePlans(@PathVariable("id") Long id, SubjectEntity subjectEntity) {
-        teacherService.savePlans(id,subjectEntity);
+        teacherService.savePlans(id, subjectEntity);
+
+        try {
+            classReservationService.classRoomReservation(subjectEntity, universitySubjectService.getById(id).getUniversitySubject());
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Already booked");
+        }
+//        classReservationService.classRoomReservation(subjectEntity, universitySubjectService.getById(id).getUniversitySubject());
         return new RedirectView("http://localhost:8080/teacher/" + id + "/classesPlanner");
     }
 
 
     @PostMapping("/saveEditedPlans")
     public RedirectView saveEditedPlans(@PathVariable("id") Long id, SubjectEntity subjectEntity) {
-
-        teacherService.saveEditedPlans(id,subjectEntity);
+        teacherService.saveEditedPlans(id, subjectEntity);
+//        classReservationService.classRoomReservation(subjectEntity, universitySubjectService.getById(id).getUniversitySubject());
         return new RedirectView("http://localhost:8080/teacher/" + id + "/seminarySchedule");
     }
 
@@ -154,6 +168,7 @@ public class TeacherController {
     @PostMapping("/saveExam")
     public RedirectView createExam(@PathVariable("id") Long id, ExamEntity examEntity) {
         examService.createExam(examEntity, id);
+        classReservationService.classRoomReservation(examEntity);
         return new RedirectView("http://localhost:8080/teacher/" + id + "/examPlanner");
 
     }
@@ -258,10 +273,10 @@ public class TeacherController {
     public RedirectView scheduleDelete(@PathVariable(name = "id") Long id) {
 
         SubjectEntity subjectEntity = subjectService.getById(id);
+        Long nr = subjectEntity.getSubjectId();
         subjectService.delete(id);
         return new RedirectView("http://localhost:8080/teacher/" + id + "/seminarySchedule");
     }
-
 
 }
 

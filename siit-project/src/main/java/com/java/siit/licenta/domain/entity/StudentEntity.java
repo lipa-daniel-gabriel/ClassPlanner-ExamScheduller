@@ -1,11 +1,9 @@
 package com.java.siit.licenta.domain.entity;
 
-import com.java.siit.licenta.domain.model.TeacherDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.core.convert.converter.Converter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
